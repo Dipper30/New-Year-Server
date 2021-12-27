@@ -1,0 +1,6 @@
+# define files not required to lint
+.eslintrc.js
+.json
+.build/*
+node_module
+db/*

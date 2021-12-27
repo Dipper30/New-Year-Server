@@ -1,0 +1,30 @@
+{
+  "development": {
+    "username": "root",
+    "password": "123456",
+    "database": "newyear",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "admin",
+    "password": "db123456",
+    "database": "db",
+    "host": "db.chqoyv7zkx75.us-east-2.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "ali": {
+    "username": "root",
+    "password": "ali@DB123456",
+    "database": "estudydb",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
