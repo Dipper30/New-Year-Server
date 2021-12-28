@@ -106,19 +106,22 @@ class Auth extends BaseService {
     const { username, password } = params
     const p = encryptMD5(password)
     try {
-      const [user, created] = await UserModel.findOrCreate({
+      const user = await UserModel.findOne({
         where: {
           username,
-          password: p,
         },
-        defaults: {
-          username,
-          password: p,
-        },
-        attributes: ['id', 'username'],
       })
+      if (!user) {
+        const created = await UserModel.create({
+          username,
+          password,
+        })
+        return created
+      } else {
+        if (password != user.password) throw new UserException(errCode.AUTH_ERROR, 'Wrong Password')
+        else return user
+      }
       
-      return user
     } catch (error) {
       return error
     }
