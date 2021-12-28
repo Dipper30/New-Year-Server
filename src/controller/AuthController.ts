@@ -99,6 +99,9 @@ class Auth extends BaseController {
       const { userID, username } = token.verifyToken()
       if (!userID || !username) throw new TokenException(10050, 'Can\'t retrieve token')
       
+      const valid = await AuthService.findAccountByUsername(username)
+      if (!valid) throw new TokenException(10050, 'User not exists.')
+
       res.json({
         code: 200,
         data: {
