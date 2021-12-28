@@ -29,7 +29,7 @@ class Auth extends BaseService {
       const lowerUsername = username.toLowerCase()
       const hasAccount = await UserModel.findOne({
         where: { 
-          username: sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), 'LIKE', '%' + lowerUsername + '%'),
+          username: sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), lowerUsername),
         },
       })
       // const hasAccount = await UserModel.findOne({
@@ -71,7 +71,7 @@ class Auth extends BaseService {
     try {
       const user = await UserModel.findOne({
         where: { 
-          username: sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), 'LIKE', '%' + lowerUsername + '%'),
+          username: sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), lowerUsername),
         },
       })
       // const user = await UserModel.findOne({
