@@ -114,11 +114,11 @@ class Auth extends BaseService {
       if (!user) {
         const created = await UserModel.create({
           username,
-          password,
+          p,
         })
         return created
       } else {
-        if (password != user.password) throw new UserException(errCode.AUTH_ERROR, 'Wrong Password')
+        if (p != user.password) throw new UserException(errCode.AUTH_ERROR, 'Wrong Password')
         else return user
       }
       
