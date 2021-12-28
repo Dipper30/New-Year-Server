@@ -70,6 +70,7 @@ class BaseValidator implements Validator {
    */
   // 
   checkQuery (params: any, rules: string[]): any {
+    if (!params) return {}
     // 遍历每一个属性名的规则
     for (let i = 0; i < rules.length; i++) {
       const single_rule = rules[i]
