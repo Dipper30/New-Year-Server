@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "admin",
-    "password": "123456",
+    "password": "db123456",
     "database": "dev",
     "host": "db.chqoyv7zkx75.us-east-2.rds.amazonaws.com",
     "dialect": "mysql"
