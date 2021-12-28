@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
+    "username": "admin",
     "password": "123456",
-    "database": "newyear",
-    "host": "127.0.0.1",
+    "database": "dev",
+    "host": "db.chqoyv7zkx75.us-east-2.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
@@ -16,7 +16,7 @@
   "production": {
     "username": "admin",
     "password": "db123456",
-    "database": "db",
+    "database": "newyear",
     "host": "db.chqoyv7zkx75.us-east-2.rds.amazonaws.com",
     "dialect": "mysql"
   },
