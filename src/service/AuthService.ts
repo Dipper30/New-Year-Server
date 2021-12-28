@@ -26,54 +26,16 @@ class Auth extends BaseService {
   async findAccountByUsername (username: string): Promise<Boolean> {
     try {
       //TODO ignore case
+      const lowerUsername = username.toLowerCase()
       const hasAccount = await UserModel.findOne({
-        where: { username },
+        where: { 
+          username: sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), 'LIKE', '%' + lowerUsername + '%'),
+        },
       })
+      // const hasAccount = await UserModel.findOne({
+      //   where: { username },
+      // })
       return Boolean(hasAccount)
-    } catch (error) {
-      return false
-    }
-  }
-
-  async findAccountByUserID (id: number): Promise<any> {
-    try {
-      const user = await UserModel.findByPk(id)
-      if (!user) return false
-
-      // get details from Home_Customer || Business_Customer || Admin_Customer
-      let detail: any
-      if (user.role_id == role.ADMIN) {
-        detail = await AdminModel.findOne({
-          where: {
-            uid: user.id,
-          },
-        })
-      } else if (user.role_id == role.HOME_CUSTOMER) {
-        detail = await Home_Customer.findOne({
-          where: {
-            uid: user.id,
-          },
-        })
-      } else if (user.role_id == role.BUSINESS_CUSTOMER) {
-        detail = await Business_Customer.findOne({
-          where: {
-            uid: user.id,
-          },
-        })
-      }
-      if (!detail) return false
-      /**
-       * get access
-       * select name from access_roles join accesses on aid = accesses.type where rid = user.role_id;
-       */
-      const [accesses, metadata] = await sequelize.query(`select type from Access_Roles join Accesses on aid = Accesses.type where rid = ${user.role_id};`)
-      const auth = Array.from(accesses).map((ac: any) => ac.type)
-      const res = omitFields({ ...user.dataValues, ...detail.dataValues }, ['password'])
-
-      return {
-        ...res,
-        auth,
-      }
     } catch (error) {
       return false
     }
@@ -103,14 +65,20 @@ class Auth extends BaseService {
   }
 
   async loginAccount (params: Account) {
-    const { username, password } = params
+    let { username, password } = params
     const p = encryptMD5(password)
+    const lowerUsername = username.toLowerCase()
     try {
       const user = await UserModel.findOne({
-        where: {
-          username,
+        where: { 
+          username: sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), 'LIKE', '%' + lowerUsername + '%'),
         },
       })
+      // const user = await UserModel.findOne({
+      //   where: {
+      //     username,
+      //   },
+      // })
       if (!user) {
         const created = await UserModel.create({
           username,
@@ -164,49 +132,6 @@ class Auth extends BaseService {
   //       ...result,
   //       auth,
   //     }
-  //   } catch (error) {
-  //     return error
-  //   }
-  // }
-
-  // async update (data: UpdateUser) {
-  //   const t = await sequelize.transaction()
-  //   try {
-  //     const user = await UserModel.findByPk(data.uid, { transaction: t })
-  //     if (!user) throw new UserException()
-
-  //     if (data.username && user.username != data.username) {
-  //       const hasAccount = await this.findAccountByUsername(user.username)
-  //       if (hasAccount) throw new UserException(errCode.USER_EXISTS)
-  //       user.username = data.username
-  //     }
-  //     const obj: any = data
-  //     delete obj.uid
-  //     delete obj.username
-  //     let detail: any
-  //     if (user.role_id == role.HOME_CUSTOMER) {
-  //       detail = await Home_Customer.findOne({
-  //         where: { uid: user.id },
-  //         transaction: t,
-  //       })
-  //       for (let attr in obj) {
-  //         detail[attr] = obj[attr]
-  //       }
-  //       await detail.save()
-  //     } else if (user.role_id == role.BUSINESS_CUSTOMER) {
-  //       detail = await Business_Customer.findOne({
-  //         where: { uid: user.id },
-  //         transaction: t,
-  //       })
-  //       for (let attr in obj) {
-  //         detail[attr] = obj[attr]
-  //       }
-  //       await detail.save()
-  //     } else {
-
-  //     }
-  //     await user.save()
-  //     return user
   //   } catch (error) {
   //     return error
   //   }
