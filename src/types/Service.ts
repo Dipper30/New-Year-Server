@@ -27,3 +27,25 @@ export interface PostComment {
   visible?: boolean,
   uploadedAt?: number,
 }
+
+export interface GetMessage {
+  lastCheck?: number,
+  uid?: number,
+}
+
+export interface PostMessage {
+  title_en: string,
+  title_zh_cn: string,
+  title_ja: string,
+  content_en: string,
+  content_zh_cn: string,
+  content_ja: string,
+  to: number,
+  uploadedAt?: number,
+}
+
+export interface PostFeedback {
+  content: string,
+  title: string,
+  uid?: number,
+}

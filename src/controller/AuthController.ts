@@ -92,29 +92,25 @@ class Auth extends BaseController {
   //   }
   // }
 
-  // async getUserInfo (req: any, res: any, next: any): Promise<any> {
-  //   try {
-  //     const valid: AuthValidator = new AuthValidator(req.query)
-  //     const query: any = valid.checkInfo()
-  //     if (!query) throw new ParameterException()
+  async getUserInfo (req: any, res: any, next: any): Promise<any> {
+    try {
 
-  //     const token = new TokenService(req.headers.token)
-  //     const { userID } = token.verifyToken()
-  //     if (!userID) throw new TokenException()
-  //     if (userID != query.uid) throw new AuthException(errCode.ACCESS_ERROR)
+      const token = new TokenService(req.headers.token)
+      const { userID, username } = token.verifyToken()
+      if (!userID || !username) throw new TokenException(10050, 'Can\'t retrieve token')
+      
+      res.json({
+        code: 200,
+        data: {
+          id: userID,
+          username,
+        },
+      })
 
-  //     const info = await AuthService.getUserInfo(query)
-  //     if (isError(info)) throw info
-
-  //     res.json({
-  //       code: 200,
-  //       data: info,
-  //     })
-
-  //   } catch (error) {
-  //     next(error)
-  //   }
-  // }
+    } catch (error) {
+      next(error)
+    }
+  }
 
   // async update (req: any, res: any, next: any): Promise<any> {
   //   try {

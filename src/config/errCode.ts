@@ -37,4 +37,8 @@ export enum errCode {
   FILE_TYPE_ERROR = 80002,
   DIR_BUILD_ERROR = 80003,
   DIR_NOT_EXISTS = 80004,
+
+  // message error code
+  MESSAGE_ERROR = 90000,
+  FEEDBACK_ERROR = 90001,
 }

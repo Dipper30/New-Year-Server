@@ -31,6 +31,8 @@ class BaseException extends Error implements Exception {
     [errCode.COMMENT_CONTENT]: 'Comment should be no more than 50 words and no less than 1 word',
     [errCode.COMMENT_NOT_FOUND]: 'Comment Not Found',
     [errCode.ALREADY_REPORTED]: 'Already Reported',
+    [errCode.MESSAGE_ERROR]: 'Message Error',
+    [errCode.FEEDBACK_ERROR]: 'Feedback Error',
   }
 
   constructor (code: number = 500, message?: string|null|undefined) {

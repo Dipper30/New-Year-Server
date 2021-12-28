@@ -3,6 +3,7 @@ import TokenService from './TokenService'
 import FileService from './FileService'
 import GreetingService from './GreetingService'
 import CommentService from './CommentService'
+import MessageService from './MessageService'
 
 export {
   AuthService,
@@ -10,4 +11,5 @@ export {
   FileService,
   GreetingService,
   CommentService,
+  MessageService,
 }

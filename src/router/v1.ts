@@ -5,12 +5,14 @@ import {
   GreetingController,
   // ConfigController,
 } from '../controller/index'
+import MessageController from '../controller/MessageController'
 
 const router: Router = Router()
 
 // auth
 // router.post('/register', AuthController.register)
 router.post('/login', AuthController.login)
+router.post('/token', AuthController.getUserInfo)
 
 router.post('/postGreeting', GreetingController.postGreeting)
 router.post('/likeGreeting', GreetingController.likeGreeting)
@@ -18,5 +20,11 @@ router.post('/reportGreeting', GreetingController.reportGreeting)
 router.post('/postComment', CommentController.postComment)
 
 router.get('/greetings', GreetingController.getGreetings)
+
+// messages
+router.get('/messages', MessageController.getMessages)
+router.post('/message', MessageController.postMessage)
+router.post('/checkMessage', MessageController.checkMessage)
+router.post('/feedback', MessageController.postFeedback)
 
 module.exports = router
