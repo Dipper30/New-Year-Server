@@ -114,7 +114,7 @@ class Auth extends BaseService {
       if (!user) {
         const created = await UserModel.create({
           username,
-          p,
+          password: p,
         })
         return created
       } else {
