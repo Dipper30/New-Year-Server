@@ -14,7 +14,7 @@ module.exports = {
     await queryInterface.bulkInsert('Users', [
       {
         username: "Dipper",
-        password: "dp123456",
+        password: "1f77692534b3d6824030509e8923a991",
       }
     ], {})
     await queryInterface.bulkInsert('Activities', [
