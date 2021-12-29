@@ -7,6 +7,7 @@ import FileException from './FileException'
 import GreetingException from './GreetingException'
 import CommentException from './CommentException'
 import MessageException from './MessageException'
+import ActivityException from './ActivityException'
 
 export {
   AuthException,
@@ -18,4 +19,5 @@ export {
   GreetingException,
   CommentException,
   MessageException,
+  ActivityException,
 }

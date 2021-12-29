@@ -1,28 +1,22 @@
 import {
-  region,
-  state,
-  statesInRegion,
-} from './region'
-
-import {
   role,
   access,
 } from './auth'
 
+import { activityType } from './activities'
+
 import { errCode } from './errCode'
 
-import {
-  marriageStatus,
-  gender,
-} from './common'
+// import {
+//   marriageStatus,
+//   gender,
+// } from './common'
 
 export {
-  region,
-  state,
-  statesInRegion,
-  role,
-  access,
+  activityType,
+  // role,
+  // access,
   errCode,
-  marriageStatus,
-  gender,
+  // marriageStatus,
+  // gender,
 }

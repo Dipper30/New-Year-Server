@@ -6,6 +6,7 @@
   "scripts": {
     "start": "export NODE_ENV=development && nodemon src/app.ts",
     "product": "export NODE_ENV=production && nodemon src/app.ts",
+    "ai": "export NODE_ENV=ai && nodemon src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "request-validate": "^1.0.9",
     "sequelize": "^6.6.2",
     "sequelize-cli": "^6.2.0",
+    "socket.io": "^4.4.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.4",
     "validator": "^13.6.0"

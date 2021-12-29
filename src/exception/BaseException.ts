@@ -33,6 +33,9 @@ class BaseException extends Error implements Exception {
     [errCode.ALREADY_REPORTED]: 'Already Reported',
     [errCode.MESSAGE_ERROR]: 'Message Error',
     [errCode.FEEDBACK_ERROR]: 'Feedback Error',
+    [errCode.ACTIVITY_ERROR]: 'Activity Error',
+    [errCode.ACTIVITY_EXPIRED]: 'Activity Expired',
+    [errCode.ACTIVITY_NOT_FOUND]: 'Activity Not Found',
   }
 
   constructor (code: number = 500, message?: string|null|undefined) {

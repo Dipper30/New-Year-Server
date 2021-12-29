@@ -49,3 +49,17 @@ export interface PostFeedback {
   title: string,
   uid?: number,
 }
+
+export interface Participation {
+  uid?: number,
+  aid: number,
+  config?: string,
+}
+
+export interface Activity {
+  id?: number,
+  title: string,
+  desc?: string,
+  startsAt: string,
+  expiresAt: string,
+}

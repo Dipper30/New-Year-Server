@@ -4,6 +4,7 @@ import FileService from './FileService'
 import GreetingService from './GreetingService'
 import CommentService from './CommentService'
 import MessageService from './MessageService'
+import ActivityService from './ActivityService'
 
 export {
   AuthService,
@@ -12,4 +13,5 @@ export {
   GreetingService,
   CommentService,
   MessageService,
+  ActivityService,
 }

@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { 
+  ActivityController,
   AuthController,
   CommentController,
   GreetingController,
@@ -26,5 +27,10 @@ router.get('/messages', MessageController.getMessages)
 router.post('/message', MessageController.postMessage)
 router.post('/checkMessage', MessageController.checkMessage)
 router.post('/feedback', MessageController.postFeedback)
+
+// activity
+router.post('/addActivity', ActivityController.addActivity)
+router.post('/deleteActivity', ActivityController.deleteActivity)
+router.post('/participate', ActivityController.participate)
 
 module.exports = router

@@ -1,4 +1,4 @@
-import { access, errCode } from '../config'
+import { errCode } from '../config'
 import { ParameterException, FileException, TokenException } from '../exception'
 import BaseController from './BaseController'
 import { GreetingService, CommentService, TokenService } from '../service'
