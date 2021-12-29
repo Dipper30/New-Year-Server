@@ -63,3 +63,8 @@ export interface Activity {
   startsAt: string,
   expiresAt: string,
 }
+
+export interface CheckParticipation {
+  uid?: number,
+  aid?: number,
+}

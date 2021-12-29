@@ -1,3 +1,5 @@
+import { CheckParticipation } from "../types/Service"
+
 const BaseValidator = require('./BaseValidator')
 
 export default class ActivityValidator extends BaseValidator {
@@ -39,7 +41,14 @@ export default class ActivityValidator extends BaseValidator {
       'config|string',
     ]
     return this.checkParams(this.params, pRule)
+  }
 
+  checkP (): CheckParticipation {
+    const pRule = [
+      'uid|number',
+      'aid|number',
+    ]
+    return this.checkQuery(this.params, pRule)
   }
 
 }

@@ -4,7 +4,7 @@ import BaseController from './BaseController'
 import { GreetingService, CommentService, TokenService, ActivityService } from '../service'
 import { CommentValidator, GreetingValidator } from '../validator'
 import { isError } from '../utils/tools'
-import { Activity as ActivityType, Participation as ParticipationType } from '../types/Service'
+import { Activity as ActivityType, CheckParticipation, Participation as ParticipationType } from '../types/Service'
 import ActivityValidator from '../validator/ActivityValidator'
 const multiparty = require('multiparty')
 const fs = require('fs')
@@ -104,6 +104,37 @@ class Activity extends BaseController {
 
       // participate
       const participated = await ActivityService.drawNewYearLuck({ ...data, uid: userID })
+      if (isError(participated)) throw participated
+      
+      res.json({
+        code: 201,
+        data: participated,
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async checkParticipation (req: any, res: any, next: any): Promise<any> {
+    try {
+      // parameter validation
+      const data: CheckParticipation = req.query
+      const valid = new ActivityValidator(data)
+      const query = valid.checkP()
+      if (!query) throw new ParameterException(errCode.ACTIVITY_ERROR)
+
+      // verify token
+      const Token = new TokenService(req.headers.token)
+      const { userID, username } = Token.verifyToken()
+      const { uid } = query
+      if (uid) {
+        if (uid != userID && username != 'Dipper') if (!userID || !username) throw new TokenException()
+      } else {
+        query.uid = userID
+      }
+      
+      // participate
+      const participated = await ActivityService.checkParticipation(query)
       if (isError(participated)) throw participated
       
       res.json({

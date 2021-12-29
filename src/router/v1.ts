@@ -32,5 +32,6 @@ router.post('/feedback', MessageController.postFeedback)
 router.post('/addActivity', ActivityController.addActivity)
 router.post('/deleteActivity', ActivityController.deleteActivity)
 router.post('/participate', ActivityController.participate)
+router.get('/checkParticipation', ActivityController.checkParticipation)
 
 module.exports = router

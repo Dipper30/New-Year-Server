@@ -2,7 +2,7 @@ import BaseService from './BaseService'
 import { encryptMD5, getUnixTS, omitFields } from '../utils/tools'
 import { ActivityException, CommentException, UserException } from '../exception'
 import { activityType, errCode } from '../config'
-import { LikeGreeting, PostComment, PostGreeting, Activity as ActivityType, Participation } from '../types/Service'
+import { LikeGreeting, PostComment, PostGreeting, Activity as ActivityType, Participation, CheckParticipation } from '../types/Service'
 import GreetingException from '../exception/GreetingException'
 import gs from './GreetingService'
 
@@ -59,13 +59,26 @@ class Activity extends BaseService {
       const ac = await ActivityModel.findByPk(aid)
       if (!ac) throw new ActivityException(errCode.ACTIVITY_NOT_FOUND)
 
-      const participated = await ParticipationModel.create({
-        uid,
-        aid,
-        config: config ? config : '',
+      const pa = await ParticipationModel.findOne({
+        where: {
+          uid,
+          aid,
+        },
       })
 
-      return participated
+      if (!pa) {
+        const participated = await ParticipationModel.create({
+          uid,
+          aid,
+          config: config ? config : '',
+        })
+        return participated
+      } else {
+        pa.config = config
+        await pa.save()
+        return pa
+      }
+      
     } catch (error) {
       return error
     }
@@ -81,6 +94,26 @@ class Activity extends BaseService {
         uid,
         aid,
         config: config ? config : '',
+      })
+
+      return participated
+    } catch (error) {
+      return error
+    }
+  }
+
+  async checkParticipation (p: CheckParticipation): Promise<any> {
+    try {
+      const { uid, aid } = p
+      const criteria: CheckParticipation = { uid }
+      if (aid) {
+        criteria.aid = aid
+        const ac = await ActivityModel.findByPk(aid)
+        if (!ac) throw new ActivityException(errCode.ACTIVITY_NOT_FOUND)
+      }
+
+      const participated = await ParticipationModel.findAll({
+        where: criteria,
       })
 
       return participated
