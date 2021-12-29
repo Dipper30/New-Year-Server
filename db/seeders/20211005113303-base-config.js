@@ -25,6 +25,17 @@ module.exports = {
         startsAt: "1640759091559"
       }
     ], {})
+    await queryInterface.bulkInsert('Messages', [
+      {
+        title_en: "Try Your Luck",
+        title_zh_cn: "新年运势",
+        title_ja: "お正月の運勢",
+        content_en: "Draw a luck card and test your fortune in the coming year!",
+        content_zh_cn: "参加福卡活动，测一测未来一年的运势吧！",
+        content_ja: "深香イベントに参加して、来年の運勢を試してみてください！",
+        to: 0
+      }
+    ], {})
   },
 
   down: async (queryInterface, Sequelize) => {
