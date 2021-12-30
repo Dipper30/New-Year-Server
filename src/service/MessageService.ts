@@ -47,7 +47,7 @@ class Message extends BaseService {
         attributes: ['lastCheck'],
       })
 
-      lastCheck = lastCheckTs.lastCheck ? Number(lastCheckTs.lastCheck) : 0
+      lastCheck = lastCheckTs?.lastCheck ? Number(lastCheckTs.lastCheck) : 0
       
       if (!messages || messages.length < 1) return [messages, 0]
       // 计算未被用户查看过的消息

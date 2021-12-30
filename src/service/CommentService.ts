@@ -78,7 +78,7 @@ class Comment extends BaseService {
       const c = await CommentModel.findByPk(cid)
       if (!c) throw new CommentException(errCode.COMMENT_NOT_FOUND)
 
-      if (c.uid != uid || uid != auth.DIPPER_ID) throw new AuthException(errCode.AUTH_ERROR, 'Not Authorized') 
+      if (c.uid != uid && uid != auth.DIPPER_ID) throw new AuthException(errCode.AUTH_ERROR, 'Not Authorized') 
 
       c.visible = false
       await c.save()
