@@ -19,6 +19,8 @@ router.post('/postGreeting', GreetingController.postGreeting)
 router.post('/likeGreeting', GreetingController.likeGreeting)
 router.post('/reportGreeting', GreetingController.reportGreeting)
 router.post('/postComment', CommentController.postComment)
+router.post('/deleteComment', CommentController.deleteComment)
+router.post('/deleteGreeting', GreetingController.deleteGreeting)
 
 router.get('/greetings', GreetingController.getGreetings)
 

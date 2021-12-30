@@ -28,7 +28,7 @@ export default class GreetingArray {
     const resultArr: any[] = []
     const traversed: Set<number> = new Set<number>()
     comments.forEach(c => {
-      // console.log('it is root ', c.root, '  target: ', targetRoot)
+      if (c.visible == false) c.dataValues.content = ''
       if (c.root == targetRoot) {
         resultArr.push(c)
         traversed.add(c.id)

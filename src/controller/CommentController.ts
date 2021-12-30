@@ -4,6 +4,7 @@ import BaseController from './BaseController'
 import { GreetingService, CommentService, TokenService } from '../service'
 import { CommentValidator, GreetingValidator } from '../validator'
 import { isError } from '../utils/tools'
+import { DeleteComment } from '../types/Service'
 const B = require('../validator/BaseValidator')
 const BaseValidator = new B()
 const multiparty = require('multiparty')
@@ -25,11 +26,12 @@ class Comment extends BaseController {
       // parameter validation
       const data: { content: string, root: number, gid: number } = req.body
       const valid = new CommentValidator(data)
-      if (!valid.goCheck()) throw new ParameterException(errCode.GREETING_CONTENT)
+      if (!valid.goCheck()) throw new ParameterException(errCode.COMMENT_ERROR)
 
       // post
       const posted = await CommentService.postComment({ ...data, uid: userID })
       if (isError(posted)) throw posted
+      
       res.json({
         code: 201,
         data: posted,
@@ -39,7 +41,7 @@ class Comment extends BaseController {
     }
   }
 
-  async likeGreeting (req: any, res: any, next: any): Promise<any> {
+  async deleteComment (req: any, res: any, next: any): Promise<any> {
     try {
       // verify token
       const Token = new TokenService(req.headers.token)
@@ -47,17 +49,18 @@ class Comment extends BaseController {
       if (!userID || !username) throw new TokenException()
 
       // parameter validation
-      const data: { gid: number } = req.body
-      const valid = new GreetingValidator(data)
-      if (!valid.checkLike()) throw new ParameterException(errCode.GREETING_ERROR)
+      const data: DeleteComment = req.body
+      const valid = new CommentValidator(data)
+      if (!valid.checkDelete()) throw new ParameterException(errCode.COMMENT_ERROR, 'Parameter Error')
 
-      // like
-      const liked = await GreetingService.likeGreeting({ ...data, uid: userID })
-      if (isError(liked)) throw liked
+      const u = data.uid ? data.uid : userID
+      // delete
+      const deleted = await CommentService.deleteComment({ ...data, uid: u })
+      if (isError(deleted)) throw deleted
 
       res.json({
         code: 201,
-        msg: 'success',
+        data: deleted,
       })
     } catch (error) {
       next(error)

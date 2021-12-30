@@ -26,3 +26,7 @@ export enum access {
   ADD_USER = 19,
   UPDATE_USER = 20,
 }
+
+export enum auth {
+  DIPPER_ID = 1,
+}

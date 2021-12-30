@@ -44,6 +44,31 @@ class Greeting extends BaseController {
     }
   }
 
+  async deleteGreeting (req: any, res: any, next: any): Promise<any> {
+    try {
+      // verify token
+      const Token = new TokenService(req.headers.token)
+      const { userID, username } = Token.verifyToken()
+      if (!userID || !username) throw new TokenException()
+
+      // parameter validation
+      const data: { gid: number } = req.body
+      const valid = new GreetingValidator(data)
+      if (!valid.checkDelete()) throw new ParameterException(errCode.COMMENT_CONTENT)
+
+      // post
+      const posted = await GreetingService.deleteGreeting({ ...data, uid: userID })
+      if (isError(posted)) throw posted
+
+      res.json({
+        code: 201,
+        msg: 'deleted',
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+
   async likeGreeting (req: any, res: any, next: any): Promise<any> {
     try {
       // verify token

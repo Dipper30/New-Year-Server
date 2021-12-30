@@ -7,6 +7,8 @@ export default class GreetingValidator extends BaseValidator {
   // type check
   rules = [
     'content|string|required',
+    'anonymous|boolean',
+    'visible|boolean',
   ]
 
   constructor (params: any) {
@@ -41,6 +43,13 @@ export default class GreetingValidator extends BaseValidator {
       'negative|boolean',
     ]
     return this.checkParams(this.params, rRule)
+  }
+
+  checkDelete (): Boolean {
+    const dRule = [
+      'gid|number|required',
+    ]
+    return this.checkParams(this.params, dRule)
   }
 
 }

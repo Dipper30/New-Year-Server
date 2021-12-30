@@ -3,6 +3,7 @@ export interface PostGreeting {
   uid: number,
   visible?: boolean,
   uploadedAt?: number,
+  anonymous?: boolean,
 }
 
 export interface LikeGreeting {
@@ -26,6 +27,13 @@ export interface PostComment {
   root: number,
   visible?: boolean,
   uploadedAt?: number,
+  anonymous?: boolean,
+}
+
+export interface DeleteComment {
+  uid?: number,
+  gid: number,
+  cid: number,
 }
 
 export interface GetMessage {

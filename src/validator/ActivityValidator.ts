@@ -1,4 +1,4 @@
-import { CheckParticipation } from "../types/Service"
+import { CheckParticipation } from '../types/Service'
 
 const BaseValidator = require('./BaseValidator')
 

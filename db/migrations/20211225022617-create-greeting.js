@@ -14,13 +14,13 @@ module.exports = {
       uploadedAt: {
         type: Sequelize.BIGINT
       },
-      like: {
-        type: Sequelize.INTEGER
-      },
       uid: {
         type: Sequelize.INTEGER
       },
       visible: {
+        type: Sequelize.BOOLEAN
+      },
+      anonymous: {
         type: Sequelize.BOOLEAN
       },
     });

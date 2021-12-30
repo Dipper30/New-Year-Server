@@ -1,9 +1,9 @@
-import { role } from '../config/auth'
+import { auth, role } from '../config/auth'
 import { Account } from '../types/common'
 import { AccountInfo } from '../types/User'
 import BaseService from './BaseService'
 import { encryptMD5, getUnixTS, omitFields } from '../utils/tools'
-import { GreetingException } from '../exception'
+import { AuthException, GreetingException } from '../exception'
 import { errCode } from '../config'
 import { LikeGreeting, PostGreeting as PostGreetingType, ReportGreeting } from '../types/Service'
 import { CommentService } from '.'
@@ -28,16 +28,36 @@ class Greeting extends BaseService {
 
   async postGreeting (p: PostGreetingType): Promise<any> {
     try {
-      const { content, uid, uploadedAt, visible } = p
+      const { content, uid, uploadedAt, visible, anonymous } = p
       const ts = uploadedAt ? uploadedAt : getUnixTS()
       const v = visible == null ? true : visible
+      const a = anonymous ? anonymous : false
       const posted = await GreetingModel.create({
         content,
         uid,
         uploadedAt: ts,
         visible: v,
+        anonymous: a,
       })
       return posted
+    } catch (error) {
+      return error
+    }
+  }
+
+  async deleteGreeting (p: LikeGreeting): Promise<any> {
+    try {
+      const { uid, gid } = p
+      const greeting = await GreetingModel.findByPk(gid)
+      if (!greeting) throw new GreetingException(errCode.GREETING_NOT_FOUND)
+
+      if (greeting.uid != uid || uid != auth.DIPPER_ID) throw new AuthException
+
+      greeting.visible = false
+      await greeting.save()
+      
+      return true
+
     } catch (error) {
       return error
     }
@@ -151,10 +171,6 @@ class Greeting extends BaseService {
           {
             model: LikeModel,
             as: 'Likes',
-            // attributes: {
-            //   include: [[sequelize.fn('COUNT', sequelize.col('uid'), 'likeTotal')]],
-            // },
-            // group: ['uid'],
           },
           {
             model: UserModel,
@@ -177,6 +193,7 @@ class Greeting extends BaseService {
         greeting.dataValues.reportsCount = greeting.Reports.length
         greeting.dataValues.liked = userID ? greeting.Likes.some((i: any) => i.uid = userID) : false
         greeting.dataValues.reported = userID ? greeting.Reports.some((i: any) => i.uid = userID) : false
+        if (greeting.dataValues.anonymous == true) greeting.dataValues.User = null
         // if (greeting.dataValues.likesCount == 1 && !greeting.Likes[0]?.gid) greeting.dataValues.likesCount = 0
         // if (greeting.dataValues.reportsCount == 1 && !greeting.Reports[0]?.gid) greeting.dataValues.reportsCount = 0
 
