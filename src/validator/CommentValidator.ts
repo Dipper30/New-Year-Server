@@ -27,7 +27,15 @@ export default class CommentValidator extends BaseValidator {
       'gid|number|required',
     ]
     return this.checkParams(this.params, lRule)
+  }
 
+  checkDelete (): Boolean {
+    const dRule = [
+      'uid|number',
+      'cid|number|required',
+      'gid|number|required',
+    ]
+    return this.checkParams(this.params, dRule)
   }
 
 }

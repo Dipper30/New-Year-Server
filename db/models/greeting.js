@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
   Greeting.init({
     content: DataTypes.STRING,
     uploadedAt: DataTypes.BIGINT,
-    like: DataTypes.INTEGER,
     uid: DataTypes.INTEGER,
-    visible: DataTypes.BOOLEAN
+    visible: DataTypes.BOOLEAN,
+    anonymous: DataTypes.BOOLEAN
   }, {
     sequelize,
     timestamps: false,

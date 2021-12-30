@@ -13,12 +13,14 @@ module.exports = {
     */
     await queryInterface.bulkInsert('Users', [
       {
+        id: 1,
         username: "Dipper",
-        password: "dp123456",
+        password: "1f77692534b3d6824030509e8923a991",
       }
     ], {})
     await queryInterface.bulkInsert('Activities', [
       {
+        id: 1,
         title: "luck",
         desc: "ad",
         expiresAt: "1640859091559",
