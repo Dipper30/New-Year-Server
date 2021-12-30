@@ -51,7 +51,7 @@ class Greeting extends BaseService {
       const greeting = await GreetingModel.findByPk(gid)
       if (!greeting) throw new GreetingException(errCode.GREETING_NOT_FOUND)
 
-      if (greeting.uid != uid || uid != auth.DIPPER_ID) throw new AuthException
+      if (greeting.uid != uid && uid != auth.DIPPER_ID) throw new AuthException()
 
       greeting.visible = false
       await greeting.save()

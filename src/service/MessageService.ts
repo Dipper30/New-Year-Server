@@ -34,7 +34,7 @@ class Message extends BaseService {
       const criteria = uid
         ? { [Op.or]: [{ to: uid }, { to: 0 }] }
         : { to: 0 }
-        console.log(1)
+
       const messages = await MessageModel.findAll({
         where: criteria,
         order: [
@@ -42,15 +42,13 @@ class Message extends BaseService {
         ],
       })
 
-      console.log(2)
-
       const lastCheckTs = await CheckedMessageModel.findOne({
         where: { uid: uid ? uid : 0 },
         attributes: ['lastCheck'],
       })
 
       lastCheck = lastCheckTs?.lastCheck ? Number(lastCheckTs.lastCheck) : 0
-      console.log(3)
+      
       if (!messages || messages.length < 1) return [messages, 0]
       // 计算未被用户查看过的消息
       let news = 0
