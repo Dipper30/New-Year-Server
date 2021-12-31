@@ -1,7 +1,7 @@
 import { errCode } from '../config'
-import { ParameterException, FileException, TokenException } from '../exception'
+import { ParameterException, FileException, TokenException, AuthException } from '../exception'
 import BaseController from './BaseController'
-import { GreetingService, CommentService, TokenService } from '../service'
+import { GreetingService, CommentService, TokenService, AuthService } from '../service'
 import { CommentValidator, GreetingValidator } from '../validator'
 import { isError } from '../utils/tools'
 import { DeleteComment } from '../types/Service'
@@ -22,6 +22,8 @@ class Comment extends BaseController {
       const Token = new TokenService(req.headers.token)
       const { userID, username } = Token.verifyToken()
       if (!userID || !username) throw new TokenException()
+      const hasAccount = await AuthService.findAccountByUserID(userID)
+      if (!hasAccount) throw new AuthException(errCode.USER_ERROR, 'User Not Found')
 
       // parameter validation
       const data: { content: string, root: number, gid: number } = req.body
@@ -47,6 +49,8 @@ class Comment extends BaseController {
       const Token = new TokenService(req.headers.token)
       const { userID, username } = Token.verifyToken()
       if (!userID || !username) throw new TokenException()
+      const hasAccount = await AuthService.findAccountByUserID(userID)
+      if (!hasAccount) throw new AuthException(errCode.USER_ERROR, 'User Not Found')
 
       // parameter validation
       const data: DeleteComment = req.body

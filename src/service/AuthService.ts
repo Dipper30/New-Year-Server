@@ -21,7 +21,19 @@ const {
 class Auth extends BaseService {
   constructor () {
     super()
-  } 
+  }
+
+  async findAccountByUserID (uid: number): Promise<Boolean> {
+    try {
+      const hasAccount = await UserModel.findByPk(uid)
+      // const hasAccount = await UserModel.findOne({
+      //   where: { username },
+      // })
+      return Boolean(hasAccount)
+    } catch (error) {
+      return false
+    }
+  }
 
   async findAccountByUsername (username: string): Promise<Boolean> {
     try {

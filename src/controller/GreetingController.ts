@@ -1,7 +1,7 @@
 import { errCode } from '../config'
-import { ParameterException, FileException, TokenException } from '../exception'
+import { ParameterException, FileException, TokenException, AuthException } from '../exception'
 import BaseController from './BaseController'
-import { FileService, TokenService } from '../service'
+import { AuthService, FileService, TokenService } from '../service'
 import { GreetingValidator } from '../validator'
 import { isError } from '../utils/tools'
 import GreetingService from '../service/GreetingService'
@@ -22,6 +22,8 @@ class Greeting extends BaseController {
       const Token = new TokenService(req.headers.token)
       const { userID, username } = Token.verifyToken()
       if (!userID || !username) throw new TokenException()
+      const hasAccount = await AuthService.findAccountByUserID(userID)
+      if (!hasAccount) throw new AuthException(errCode.USER_ERROR, 'User Not Found')
 
       // parameter validation
       const data: { content: string } = req.body
@@ -50,6 +52,8 @@ class Greeting extends BaseController {
       const Token = new TokenService(req.headers.token)
       const { userID, username } = Token.verifyToken()
       if (!userID || !username) throw new TokenException()
+      const hasAccount = await AuthService.findAccountByUserID(userID)
+      if (!hasAccount) throw new AuthException(errCode.USER_ERROR, 'User Not Found')
 
       // parameter validation
       const data: { gid: number } = req.body
@@ -75,6 +79,8 @@ class Greeting extends BaseController {
       const Token = new TokenService(req.headers.token)
       const { userID, username } = Token.verifyToken()
       if (!userID || !username) throw new TokenException()
+      const hasAccount = await AuthService.findAccountByUserID(userID)
+      if (!hasAccount) throw new AuthException(errCode.USER_ERROR, 'User Not Found')
 
       // parameter validation
       const data: { gid: number } = req.body
@@ -108,6 +114,8 @@ class Greeting extends BaseController {
       const Token = new TokenService(req.headers.token)
       const { userID, username } = Token.verifyToken()
       if (!userID || !username) throw new TokenException()
+      const hasAccount = await AuthService.findAccountByUserID(userID)
+      if (!hasAccount) throw new AuthException(errCode.USER_ERROR, 'User Not Found')
 
       // parameter validation
       const data: { gid: number } = req.body

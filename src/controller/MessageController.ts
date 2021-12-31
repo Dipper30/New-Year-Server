@@ -1,7 +1,7 @@
 import { errCode } from '../config'
-import { ParameterException, FileException, TokenException } from '../exception'
+import { ParameterException, FileException, TokenException, AuthException } from '../exception'
 import BaseController from './BaseController'
-import { FileService, MessageService, TokenService } from '../service'
+import { AuthService, FileService, MessageService, TokenService } from '../service'
 import { GreetingValidator, MessageValidator } from '../validator'
 import { isError } from '../utils/tools'
 import GreetingService from '../service/GreetingService'
@@ -23,6 +23,8 @@ class Message extends BaseController {
       const Token = new TokenService(req.headers.token)
       const { userID, username } = Token.verifyToken()
       if (!userID || !username || username != 'Dipper') throw new TokenException()
+      const hasAccount = await AuthService.findAccountByUserID(userID)
+      if (!hasAccount) throw new AuthException(errCode.USER_ERROR, 'User Not Found')
 
       // post
       const message = await MessageService.postMessage(req.body)
