@@ -191,8 +191,8 @@ class Greeting extends BaseService {
         greeting.dataValues.commentsCount = greeting.Comments.length
         greeting.dataValues.likesCount = greeting.Likes.length
         greeting.dataValues.reportsCount = greeting.Reports.length
-        greeting.dataValues.liked = userID ? greeting.Likes.some((i: any) => i.uid = userID) : false
-        greeting.dataValues.reported = userID ? greeting.Reports.some((i: any) => i.uid = userID) : false
+        greeting.dataValues.liked = userID ? greeting.Likes.some((i: any) => i.uid == userID) : false
+        greeting.dataValues.reported = userID ? greeting.Reports.some((i: any) => i.uid == userID) : false
         if (greeting.dataValues.anonymous == true) greeting.dataValues.User = null
         // if (greeting.dataValues.likesCount == 1 && !greeting.Likes[0]?.gid) greeting.dataValues.likesCount = 0
         // if (greeting.dataValues.reportsCount == 1 && !greeting.Reports[0]?.gid) greeting.dataValues.reportsCount = 0
